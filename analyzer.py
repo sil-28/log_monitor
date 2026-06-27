@@ -45,21 +45,3 @@ with open(input_file, 'r') as log_file, open(output_file, 'w', newline='', encod
                 print("-> notification sent")
     
 print("Analysis completed")
-            
-
-
-"""
-# open log file as read only
-with open('app.log', 'r') as log_file:
-    # open output file as write only
-    with open('report_errors.txt', 'w') as output_file:
-        print("Starting analysis of the log file\n")
-        output_file.write("--- REPORT ERRORS FOUNDED ---\n\n")
-        
-        for row in log_file:
-            if "ERROR" in row or "CRITICAL" in row:
-                print(f"Anomaly founded: {row.strip()}")
-                
-                output_file.write(row)
-print("Analysis completed")
-"""

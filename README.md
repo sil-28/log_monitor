@@ -11,5 +11,5 @@ A lightweight Python tool designed to automate log analysis and system monitorin
 ## How to Run
 1. Clone the repository.
 2. Install dependencies: `pip install -r requirements.txt` (we will create this next).
-3. Create a `.env` file with your `TELEGRAM_TOKEN` and `TELEGRAM_CHAT_ID`.
-4. Run `python2 analizzatore.py`.
+3. Create a `.env` file with your `Token_telegram` and `Chat_ID_telegram`.
+4. Run `python2 analyzer.py`.
