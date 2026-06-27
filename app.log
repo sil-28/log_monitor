@@ -1,0 +1,6 @@
+2026-06-25 14:32:01 INFO  Sistema avviato correttamente.
+2026-06-25 14:35:12 WARN  Utilizzo memoria RAM elevato: 85%.
+2026-06-25 14:40:00 ERROR Connessione fallita al server centrale del CERN.
+2026-06-25 14:42:15 INFO  Tentativo di riconnessione in corso...
+2026-06-25 14:45:03 CRITICAL Sensore di temperatura camera a vuoto fuori scala!
+2026-06-25 14:46:10 INFO  Log generato correttamente.
