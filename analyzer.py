@@ -3,6 +3,7 @@ import requests
 import os
 from dotenv import load_dotenv
 import sys
+import time
 
 # load variables from .env
 load_dotenv()
@@ -24,7 +25,7 @@ def send_message_telegram(mex):
 if len(sys.argv)>1:
     input_file = sys.argv[1]
 else:
-    input_file = 'app.log'
+    input_file = 'system.log'
 
 output_file = 'report_errors.csv'
 
@@ -35,33 +36,46 @@ try:
     with open(input_file, 'r') as log_file:
         with open(output_file, 'w', newline='', encoding='utf-8') as csv_file:
             writer_csv = csv.writer(csv_file, delimiter=";")
-            # write table header
-            writer_csv.writerow(['Date', 'Time', 'Level', 'Message'])
             
-            for row in log_file:
+            if os.stat(output_file).st_size == 0:
+                # write table header
+                writer_csv.writerow(['Date', 'Time', 'Level', 'Message'])
+                csv_file.flush()
+                
+            while(True):
+                row = log_file.readline()
+                
+                if not row:
+                    time.sleep(1) 
+                    continue
+                
                 if 'ERROR' in row or 'CRITICAL' in row:
-                    
                     # divide the row based on the blank spaces
                     parts = row.split()
                     
-                    date = parts[0]
-                    time = parts[1]
-                    level = parts[2]
-                    message = " ".join(parts[3:])
-                    
-                    # write in the table
-                    writer_csv.writerow([date, time, level, message])
-                    
-                    # if the level is Critical, send an allert on telegram
-                    if level == 'CRITICAL':
-                        mex = f"🚨 ALLERT  🚨\n\n Date: {date} {time}\nLevel: {level}\nAnomaly: {message}"
-                        send_message_telegram(mex)
-                        print("-> notification sent")
+                    # Seccurity check: verify that the row has enough elements
+                    if len(parts)>=4:
+                        date = parts[0]
+                        time_str = parts[1]
+                        level = parts[2]
+                        message = " ".join(parts[3:])
+                        
+                        # write in the table
+                        writer_csv.writerow([date, time_str, level, message])
+                        csv_file.flush()
+                        
+                        # if the level is Critical, send an allert on telegram
+                        if level == 'CRITICAL':
+                            mex = f"🚨 ALERT  from log file {input_file} 🚨\n\n Date: {date} {time_str}\nLevel: {level}\nAnomaly: {message}"
+                            send_message_telegram(mex)
+                            print("-> Critical anomaly detected! Notification sent.")
                         
     print("Analysis completed")
     
 except FileNotFoundError:
-    print(f"❌ Error: The file '{input_file}' doesn't exist. Verify the path.")
+    print(f"❌ Error: The file '{input_file}' doesn't exist.")
 except PermissionError:
-    print(f"❌ Error: You don't have the permissions to read the file '{input_file}'.")
+    print(f"❌ Error: Permission denied for '{input_file}'.")
+except KeyboardInterrupt:
+    print("\n👋 Monitoring stopped by user.")
 
