@@ -1,6 +1,6 @@
 # Real-Time Fault-Tolerant Log Streamer & Telegram Alerter
 
-A production-ready Python automation tool designed for continuous, real-time monitoring of system logs (similar to the Linux `tail -f` command). It dynamically streams incoming log data, parses anomalies (`ERROR` and `CRITICAL`) into a structured CSV report on the fly, and instantly dispatches high-priority alerts via the Telegram Bot API.
+A robust Python automation tool designed for continuous, real-time monitoring of system logs (similar to the Linux `tail -f` command). It dynamically streams incoming log data, parses anomalies (`ERROR` and `CRITICAL`) into a structured CSV report on the fly, and instantly dispatches high-priority alerts via the Telegram Bot API.
 
 ## Features
 
@@ -13,14 +13,14 @@ A production-ready Python automation tool designed for continuous, real-time mon
 
 ## Project Structure
 
-- `analizzatore.py`: Core production script containing the streaming logic and exception handlers.
+- `analyzer.py`: Core production script containing the streaming logic and exception handlers.
 - `requirements.txt`: Clean inventory of third-party dependencies (`requests`, `python-dotenv`).
 - `.env`: (Local only) Private environment variables holding sensitive API tokens.
 - `.gitignore`: Configured to keep local log streams and authentication keys secure from version tracking.
 
 ## Installation & Setup
 1. Clone the repository.
-2. Install dependencies: `pip install -r requirements.txt` (we will create this next).
+2. Install dependencies: `pip install -r requirements.txt`.
 3. Create a `.env` file with your `Token_telegram` and `Chat_ID_telegram`.
 
 ## Usage
